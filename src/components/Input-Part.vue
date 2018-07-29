@@ -2,9 +2,9 @@
 <template>
     <div class="InputPart">
           <div class="temp-cont">
-<span class="into-header">Whats the weather in? </span>
+<span class="into-header" @click="callBack"> {{ header_title}} </span>
     <input type="text" v-model="city_name" @change="getWeather" placeholder="Enter city name"> 
-    <div class="row">
+    <div class="row"> 
         <span class="col s6" id="city_name_link">City Name</span>
                 <span class="col s6" id="zip_code_link">Zip</span>
     </div>
@@ -13,14 +13,12 @@
 
 </template>
 
-
 <script>
-import App from "./App";
-
 export default {
   name: "InputPart",
   data() {
     return {
+      header_title: "Whats the weather in?",
       city_name: "",
       temperature: "",
       humidity: "",
@@ -28,19 +26,19 @@ export default {
 
       weathers: [
         {
-          temp: "30c",
-          humidity: "80%",
-          windspeed: "100km"
+          temp: "90c",
+          humidity: "30%",
+          windspeed: "140kmh"
         },
         {
           temp: "30c",
           humidity: "80%",
-          windspeed: "100km"
+          windspeed: "100kmh"
         },
         {
-          temp: "30c",
-          humidity: "80%",
-          windspeed: "100km"
+          temp: "35c",
+          humidity: "11`%",
+          windspeed: "100kmh"
         }
       ]
     };
@@ -55,14 +53,20 @@ export default {
         )
         .then(function(response) {
           if (response.ok == false) {
-            this.$emit("showWeather", false);
+            //show error.
+            this.$emit("nothingToShow", true);
             // show other copomemnt
           } else {
+            // show weather.
             console.log(response.body.list);
           }
 
           //   console.log(App.data().showWeather);
         });
+    },
+    callBack: function() {
+      this.header_title = "Just a prank Bro!";
+      this.$emit("changeTitle", "Just a prank Bro!");
     }
   }
 };
